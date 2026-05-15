@@ -4,7 +4,7 @@ import {
     tables,
     type EventContext,
 } from "@/module_bindings";
-import { PieceCaptureEvent, type GameInfo } from "@/module_bindings/types";
+import { PieceCaptureEvent, PieceType, type GameInfo } from "@/module_bindings/types";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { useReducer, useSpacetimeDB, useTable } from "spacetimedb/react";
 import { Button } from "../ui/button";
@@ -21,6 +21,34 @@ import type { DbConnectionImpl } from "spacetimedb";
 //TODO - Move Camera overhead when piece is selected
 //TODO - animate stuff
 //TODO - fix graphics
+
+type PieceNumber = {
+    [K in PieceType["tag"]]: number | null;
+};
+
+const pieceNumber: PieceNumber = {
+ Bomb: null,
+    Spy: 1,
+    Scout: 2,
+    Miner: 3,
+    Sergeant: 4,
+    Lieutenant: 5,
+    Captain: 6,
+    Major: 7,
+    Colonel: 8,
+    General: 9,
+    Marshal: 10,
+    Flag: null,
+};
+
+function pieceDisplayName(pieceType: PieceType): string {
+    if (pieceNumber[pieceType.tag]) {
+        return `${pieceType.tag} (${pieceNumber[pieceType.tag]})`
+    } else {
+        return pieceType.tag
+    }
+}
+
 
 function opponentUserGameInfo(game: GameInfo) {
     if (game.team.tag === "Red") {
@@ -54,7 +82,8 @@ export function Game({ game }: { game: GameInfo }) {
 
     const onPieceCaptureEvent = useCallback(
         (_: EventContext, event: PieceCaptureEvent) => {
-            console.log(event);
+            const pieceName = pieceDisplayName(event.pieceType);
+            const attackedPieceName = pieceDisplayName(event.attackedPieceType);
 
             if (event.attackerTeam.tag === game.team.tag) {
                 const winStr =
@@ -65,7 +94,7 @@ export function Game({ game }: { game: GameInfo }) {
                           : "lost";
 
                 toast(
-                    `Your ${event.pieceType.tag} attacked a ${event.attackedPieceType.tag} and it ${winStr}`
+                    `Your ${pieceName} attacked a ${attackedPieceName} and it ${winStr}`
                 );
             } else {
                 const winStr =
@@ -76,7 +105,7 @@ export function Game({ game }: { game: GameInfo }) {
                           : "won";
 
                 toast(
-                    `Your ${event.attackedPieceType.tag} was attacked by a ${event.pieceType.tag} and it ${winStr}`
+                    `Your ${attackedPieceName} was attacked by a ${pieceName} and it ${winStr}`
                 );
             }
         },
@@ -113,7 +142,7 @@ export function Game({ game }: { game: GameInfo }) {
     useEffect(() => {
         const interval = setInterval(() => {
             keepAlive();
-        }, 15);
+        }, 15000);
         return () => {
             clearInterval(interval);
         };
@@ -139,7 +168,6 @@ export function Game({ game }: { game: GameInfo }) {
             boardInfo.hexSize
         );
 
-        console.log(hexPos);
 
         for (let i = 0; i < game.pieces.length; i++) {
             if (
