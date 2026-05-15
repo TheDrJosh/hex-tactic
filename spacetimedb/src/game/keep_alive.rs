@@ -8,10 +8,10 @@ use crate::{
 
 #[spacetimedb::reducer]
 pub fn keep_alive_check(ctx: &ReducerContext, game: Game) {
-    // info!(
-    //     "keep alive check {} Red({}), Blue({})",
-    //     game.id, game.red_player_keep_alive, game.blue_player_keep_alive
-    // );
+    info!(
+        "keep alive check {} Red({}), Blue({})",
+        game.id, game.red_player_keep_alive, game.blue_player_keep_alive
+    );
 
     let game = if !game.red_player_keep_alive && game.red_player_present {
         quit(ctx, &game, TeamColor::Red)
@@ -40,8 +40,6 @@ pub fn keep_alive_check(ctx: &ReducerContext, game: Game) {
 #[spacetimedb::reducer]
 fn keep_alive(ctx: &ReducerContext) {
     if let Ok((game, team)) = Game::current(&ctx.as_read_only()) {
-        info!("keep alive {} {:?}", game.id, team);
-
         match team {
             TeamColor::Red => {
                 ctx.db.game().id().update(Game {
