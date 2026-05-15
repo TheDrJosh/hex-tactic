@@ -39,6 +39,9 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+        env:
+          VITE_SPACETIMEDB_DB_NAME: hex-tactic
+          VITE_SPACETIMEDB_HOST: https://maincloud.spacetimedb.com
       - name: Setup Pages
         uses: actions/configure-pages@v6
       - name: Upload artifact
