@@ -25,7 +25,7 @@ export function Piece({
 }) {
     const boardInfo = useBoardInfo();
 
-    const gltf = useLoader(GLTFLoader, "/piece.gltf");
+    const gltf = useLoader(GLTFLoader, "piece.gltf");
 
     const color =
         team === undefined ? "gray" : team.tag === "Red" ? "red" : "blue";
