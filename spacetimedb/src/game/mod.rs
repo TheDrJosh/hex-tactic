@@ -269,6 +269,7 @@ fn quit(ctx: &ReducerContext, game: &Game, team: TeamColor) -> Option<Game> {
 
     if !other_present {
         ctx.db.game().id().delete(game.id);
+        ctx.db.board_piece().game().delete(game.id);
         None
     } else {
         Some(
