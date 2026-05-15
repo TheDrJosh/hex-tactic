@@ -81,7 +81,7 @@ export function Setup() {
                             columns={14}
                             rows={14}
                             hexSize={1}
-                            texture={"/staging_board.png"}
+                            texture={"staging_board.png"}
                             onClick={(e, info) => {
                                 const offsetToZeroX = info.width / 2;
                                 const offsetToZeroZ = info.height / 2;

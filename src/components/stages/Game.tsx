@@ -238,7 +238,7 @@ export function Game({ game }: { game: GameInfo }) {
                             columns={14}
                             rows={14}
                             hexSize={1}
-                            texture={"/board.png"}
+                            texture={"board.png"}
                             onClick={boardOnClick}
                         >
                             {game.pieces.map((piece) => {

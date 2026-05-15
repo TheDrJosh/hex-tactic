@@ -81,7 +81,7 @@ function PieceLabel({
     position: Vector3;
     rotation?: Euler;
 }) {
-    const texture_name = "/" + piece.tag.toLocaleLowerCase() + ".png";
+    const texture_name = piece.tag.toLocaleLowerCase() + ".png";
 
     const texture = useLoader(TextureLoader, texture_name);
 
