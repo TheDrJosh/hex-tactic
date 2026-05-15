@@ -1,0 +1,8 @@
+{
+    "dev": {
+        "run": "pnpm run dev"
+    },
+    "database": "hex-tactic",
+    "server": "local",
+    "module-path": "./spacetimedb"
+}
