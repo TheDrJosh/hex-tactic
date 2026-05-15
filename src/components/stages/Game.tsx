@@ -113,7 +113,7 @@ export function Game({ game }: { game: GameInfo }) {
     useEffect(() => {
         const interval = setInterval(() => {
             keepAlive();
-        }, 1000);
+        }, 15);
         return () => {
             clearInterval(interval);
         };

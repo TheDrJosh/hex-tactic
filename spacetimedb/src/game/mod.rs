@@ -244,7 +244,7 @@ pub fn join_game(ctx: &ReducerContext) -> Result<(), JoinGameError> {
             blue_player_identity,
             blue_player_present,
             blue_player_keep_alive: false,
-            scheduled_at: ScheduleAt::Interval(Duration::from_secs(2).into()),
+            scheduled_at: ScheduleAt::Interval(Duration::from_secs(30).into()),
 
             current_turn: TeamColor::Red,
             started: false,
