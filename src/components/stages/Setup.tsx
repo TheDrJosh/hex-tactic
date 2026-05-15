@@ -211,7 +211,7 @@ function PieceSelect({
 
     const count = maxPieces[piece.tag] - piecesCounts[piece.tag];
 
-    const texture_name = "/" + piece.tag.toLocaleLowerCase() + ".png";
+    const texture_name = piece.tag.toLocaleLowerCase() + ".png";
 
     return (
         <Button
