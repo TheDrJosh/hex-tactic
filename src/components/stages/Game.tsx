@@ -4,7 +4,11 @@ import {
     tables,
     type EventContext,
 } from "@/module_bindings";
-import { PieceCaptureEvent, PieceType, type GameInfo } from "@/module_bindings/types";
+import {
+    PieceCaptureEvent,
+    PieceType,
+    type GameInfo,
+} from "@/module_bindings/types";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { useReducer, useSpacetimeDB, useTable } from "spacetimedb/react";
 import { Button } from "../ui/button";
@@ -27,7 +31,7 @@ type PieceNumber = {
 };
 
 const pieceNumber: PieceNumber = {
- Bomb: null,
+    Bomb: null,
     Spy: 1,
     Scout: 2,
     Miner: 3,
@@ -43,12 +47,11 @@ const pieceNumber: PieceNumber = {
 
 function pieceDisplayName(pieceType: PieceType): string {
     if (pieceNumber[pieceType.tag]) {
-        return `${pieceType.tag} (${pieceNumber[pieceType.tag]})`
+        return `${pieceType.tag} (${pieceNumber[pieceType.tag]})`;
     } else {
-        return pieceType.tag
+        return pieceType.tag;
     }
 }
-
 
 function opponentUserGameInfo(game: GameInfo) {
     if (game.team.tag === "Red") {
@@ -168,7 +171,6 @@ export function Game({ game }: { game: GameInfo }) {
             boardInfo.hexSize
         );
 
-
         for (let i = 0; i < game.pieces.length; i++) {
             if (
                 game.pieces[i].position.col === hexPos.col &&
@@ -242,7 +244,7 @@ export function Game({ game }: { game: GameInfo }) {
             <div className="flex flex-col gap-4 landscape:flex-row">
                 <AspectRatio
                     ratio={16 / 9}
-                    className="aspect-video flex-1 rounded-lg bg-muted"
+                    className="flex-1 rounded-lg bg-muted"
                 >
                     <Canvas shadows="percentage">
                         <PerspectiveCamera

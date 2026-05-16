@@ -54,9 +54,7 @@ function Leaderboard() {
 
     return (
         <Dialog>
-            <DialogTrigger asChild>
-                <Button>Leaderboard</Button>
-            </DialogTrigger>
+            <DialogTrigger render={<Button />}>Leaderboard</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Leaderboard</DialogTitle>
@@ -125,9 +123,9 @@ function AuthSectionInner({ user }: { user: User }) {
     const setUserName = useReducer(reducers.setUserName);
 
     return (
-        <HoverCard openDelay={10} closeDelay={10}>
-            <HoverCardTrigger asChild>
-                <Button variant="link">{user.name}</Button>
+        <HoverCard>
+            <HoverCardTrigger render={<Button variant="link" />}>
+                {user.name}
             </HoverCardTrigger>
             <HoverCardContent className="flex w-64 flex-col gap-2">
                 <div>
@@ -150,8 +148,8 @@ function AuthSectionInner({ user }: { user: User }) {
                         }
                     }}
                 >
-                    <DialogTrigger asChild>
-                        <Button>Change Name</Button>
+                    <DialogTrigger render={<Button />}>
+                        Change Name
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
@@ -184,13 +182,17 @@ function AuthSectionInner({ user }: { user: User }) {
                             </form>
 
                             <DialogFooter>
-                                <DialogClose asChild>
-                                    <Button variant="outline">Cancel</Button>
+                                <DialogClose
+                                    render={<Button variant="outline" />}
+                                >
+                                    Cancel
                                 </DialogClose>
-                                <DialogClose asChild>
-                                    <Button type="submit" form="login">
-                                        Save
-                                    </Button>
+                                <DialogClose
+                                    render={
+                                        <Button type="submit" form="login" />
+                                    }
+                                >
+                                    Save
                                 </DialogClose>
                             </DialogFooter>
                         </DialogHeader>

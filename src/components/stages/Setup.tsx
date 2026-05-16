@@ -65,75 +65,70 @@ export function Setup() {
                 </Button>
             </div>
             <div className="flex flex-col gap-4 landscape:flex-row">
-                <AspectRatio
-                    ratio={16 / 9}
-                    className="aspect-video flex-1 rounded-lg bg-muted"
-                >
-                    <Canvas shadows="percentage">
-                        <PerspectiveCamera
-                            position={[0, 15, 15]}
-                            rotation={[-Math.PI / 4, 0, 0]}
-                            fov={45}
-                            makeDefault={true}
-                        />
+                <Canvas shadows="percentage" className="aspect-video">
+                    <PerspectiveCamera
+                        position={[0, 15, 15]}
+                        rotation={[-Math.PI / 4, 0, 0]}
+                        fov={45}
+                        makeDefault={true}
+                    />
 
-                        <Board
-                            columns={14}
-                            rows={14}
-                            hexSize={1}
-                            texture={"staging_board.png"}
-                            onClick={(e, info) => {
-                                const offsetToZeroX = info.width / 2;
-                                const offsetToZeroZ = info.height / 2;
+                    <Board
+                        columns={14}
+                        rows={14}
+                        hexSize={1}
+                        texture={"staging_board.png"}
+                        onClick={(e, info) => {
+                            const offsetToZeroX = info.width / 2;
+                            const offsetToZeroZ = info.height / 2;
 
-                                const hexPos = positionToHex(
-                                    new Vector2(
-                                        e.point.x + offsetToZeroX,
-                                        -e.point.z + offsetToZeroZ
-                                    ),
-                                    info.hexSize
-                                );
+                            const hexPos = positionToHex(
+                                new Vector2(
+                                    e.point.x + offsetToZeroX,
+                                    -e.point.z + offsetToZeroZ
+                                ),
+                                info.hexSize
+                            );
 
+                            if (
+                                hexPos.row >= 0 &&
+                                hexPos.row < 6 &&
+                                hexPos.col >= 0 &&
+                                hexPos.col < 15
+                            ) {
+                                setPiece({
+                                    pieceType: selectedPiece,
+                                    pos: hexPos,
+                                });
                                 if (
-                                    hexPos.row >= 0 &&
-                                    hexPos.row < 6 &&
-                                    hexPos.col >= 0 &&
-                                    hexPos.col < 15
+                                    selectedPiece !== undefined &&
+                                    piecesCounts[selectedPiece.tag] + 1 ===
+                                        maxPieces[selectedPiece.tag]
                                 ) {
-                                    setPiece({
-                                        pieceType: selectedPiece,
-                                        pos: hexPos,
-                                    });
-                                    if (
-                                        selectedPiece !== undefined &&
-                                        piecesCounts[selectedPiece.tag] + 1 ===
-                                            maxPieces[selectedPiece.tag]
-                                    ) {
-                                        setSelectedPiece(undefined);
-                                    }
+                                    setSelectedPiece(undefined);
                                 }
-                            }}
-                        >
-                            {stagingPieces.map((piece) => {
-                                return (
-                                    <Suspense key={piece.id}>
-                                        <Piece
-                                            piece={piece.pieceType}
-                                            hexPosition={piece.position}
-                                        />
-                                    </Suspense>
-                                );
-                            })}
-                        </Board>
-                        <ambientLight intensity={0.5} />
-                        <directionalLight
-                            position={[0, 10, 10]}
-                            intensity={1}
-                            castShadow
-                        />
-                    </Canvas>
-                </AspectRatio>
-                <div className="grid grid-cols-3 items-center gap-4 sm:grid-cols-6 landscape:grid-cols-2 landscape:self-start">
+                            }
+                        }}
+                    >
+                        {stagingPieces.map((piece) => {
+                            return (
+                                <Suspense key={piece.id}>
+                                    <Piece
+                                        piece={piece.pieceType}
+                                        hexPosition={piece.position}
+                                    />
+                                </Suspense>
+                            );
+                        })}
+                    </Board>
+                    <ambientLight intensity={0.5} />
+                    <directionalLight
+                        position={[0, 10, 10]}
+                        intensity={1}
+                        castShadow
+                    />
+                </Canvas>
+                <div className="grid grid-cols-3 items-center gap-4 not-landscape:sm:grid-cols-6 landscape:grid-cols-3 landscape:self-start">
                     {pieces.map((piece) => {
                         return (
                             <PieceSelect

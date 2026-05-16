@@ -16,5 +16,5 @@ export default defineConfig({
             ignored: ["./assets/**/*", "./spacetimedb/**/*"],
         },
     },
-    base: "/hex-tactic/"
+    base: "/hex-tactic/",
 });
