@@ -7,8 +7,8 @@ import { Canvas } from "@react-three/fiber";
 import { GameBoard } from "./game/GameBoard";
 import { PieceCaptured } from "./game/PieceCaptured";
 import { GameCamera } from "./game/GameCamera";
+import { Stats } from "@react-three/drei";
 
-//TODO - animate pieces
 //TODO - animate piece capture
 //TODO - fix graphics
 
@@ -116,6 +116,7 @@ export function Game({ game }: { game: GameInfo }) {
                         intensity={1}
                         castShadow
                     />
+                    <Stats />
                 </Canvas>
             </div>
             <div>

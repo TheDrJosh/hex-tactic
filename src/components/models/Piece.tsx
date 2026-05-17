@@ -1,28 +1,50 @@
-import {
-    HexPosition,
-    TeamColor,
-    type PieceType,
-} from "@/module_bindings/types";
-import { useLoader } from "@react-three/fiber";
+import { TeamColor, type PieceType } from "@/module_bindings/types";
+import { useLoader, type Euler as EulerLike } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { useBoardInfo } from "./Board";
+import { useBoardInfo, type BoardInfo } from "./Board";
 import { HexToPosition } from "@/lib/utils";
-import { Euler, TextureLoader, Vector3 } from "three";
+import { TextureLoader, Vector3, type Vector3Like } from "three";
 import { Suspense } from "react";
+import { animated, to, type AnimatedProps } from "@react-spring/three";
+
+function piecePosition(
+    column: number,
+    row: number,
+    offsetX: number,
+    offsetY: number,
+    offsetZ: number,
+    boardInfo: BoardInfo
+): Vector3 {
+    const hexOffset = HexToPosition(
+        { col: column, row: row },
+        boardInfo.hexSize
+    );
+
+    const offsetToZeroX = boardInfo.width / 2;
+    const offsetToZeroZ = boardInfo.height / 2;
+
+    return new Vector3(
+        boardInfo.position.x + (hexOffset.x - offsetToZeroX) + offsetX,
+        boardInfo.position.y + offsetY,
+        boardInfo.position.z - (hexOffset.y - offsetToZeroZ) + offsetZ
+    );
+}
 
 export function Piece({
     team,
-    rotation,
-    hexPosition,
     piece,
-    offset: pieceOffset,
-}: {
+    rotation,
+    column,
+    row,
+    offset,
+}: AnimatedProps<{
     team?: TeamColor;
     piece?: PieceType;
-    offset?: Vector3;
-    hexPosition: HexPosition;
-    rotation?: Euler;
-}) {
+    offset?: Vector3Like;
+    column: number;
+    row: number;
+    rotation?: EulerLike;
+}>) {
     const boardInfo = useBoardInfo();
 
     const gltf = useLoader(GLTFLoader, "piece.gltf");
@@ -33,69 +55,38 @@ export function Piece({
     // @ts-expect-error dont know why this is not defined in the type def
     const geometry = gltf.nodes.Piece.geometry;
 
-    const offset = HexToPosition(hexPosition, boardInfo.hexSize);
-
-    const offsetToZeroX = boardInfo.width / 2;
-    const offsetToZeroZ = boardInfo.height / 2;
-
-    const position = new Vector3(
-        boardInfo.position.x +
-            (offset.x - offsetToZeroX) +
-            (pieceOffset?.x ?? 0),
-        boardInfo.position.y + (pieceOffset?.y ?? 0),
-        boardInfo.position.z -
-            (offset.y - offsetToZeroZ) +
-            (pieceOffset?.z ?? 0)
+    const position = to(
+        [column, row, offset?.x ?? 0, offset?.y ?? 0, offset?.z ?? 0],
+        (c, r, x, y, z) => {
+            return piecePosition(c, r, x, y, z, boardInfo);
+        }
     );
 
     return (
-        <>
-            <mesh
-                castShadow
-                receiveShadow
-                geometry={geometry}
-                rotation={rotation}
-                position={position}
-            >
-                <meshStandardMaterial color={color} />
-            </mesh>
+        <animated.mesh
+            castShadow
+            receiveShadow
+            geometry={geometry}
+            rotation={rotation}
+            position={position}
+        >
+            <meshStandardMaterial color={color} />
             {piece !== undefined ? (
                 <Suspense>
-                    <PieceLabel
-                        piece={piece}
-                        position={position}
-                        rotation={rotation}
-                    />
+                    <PieceLabel piece={piece} />
                 </Suspense>
             ) : undefined}
-        </>
+        </animated.mesh>
     );
 }
 
-function PieceLabel({
-    piece,
-    position,
-    rotation,
-}: {
-    piece: PieceType;
-    position: Vector3;
-    rotation?: Euler;
-}) {
+function PieceLabel({ piece }: { piece: PieceType }) {
     const texture_name = piece.tag.toLocaleLowerCase() + ".png";
 
     const texture = useLoader(TextureLoader, texture_name);
 
-    const offset = new Vector3(0, 0.5, 0.3);
-
-    if (rotation) {
-        offset.applyEuler(rotation);
-    }
-
     return (
-        <mesh
-            position={new Vector3().addVectors(position, offset)}
-            rotation={rotation}
-        >
+        <mesh position={[0, 0.5, 0.3]}>
             <planeGeometry args={[1, 1]} />
             <meshStandardMaterial map={texture} alphaTest={0.5} />
         </mesh>

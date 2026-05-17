@@ -2,7 +2,13 @@ import { Board, type BoardInfo } from "@/components/models/Board";
 import { Piece } from "@/components/models/Piece";
 import { positionToHex } from "@/lib/utils";
 import { reducers } from "@/module_bindings";
-import type { PublicPiece, TeamColor } from "@/module_bindings/types";
+import type {
+    HexPosition,
+    PieceType,
+    PublicPiece,
+    TeamColor,
+} from "@/module_bindings/types";
+import { useSpring } from "@react-spring/three";
 import type { ThreeEvent } from "@react-three/fiber";
 import {
     Suspense,
@@ -12,7 +18,38 @@ import {
 } from "react";
 import { toast } from "sonner";
 import { useReducer } from "spacetimedb/react";
-import { Euler, Vector2, Vector3 } from "three";
+import { Euler, Vector2 } from 'three';
+
+// const AnimatedPiece = animated(Piece);
+
+function GamePiece({
+    team,
+    hexPosition,
+    pieceType,
+    selected,
+}: {
+    team: TeamColor;
+    pieceType?: PieceType;
+    selected: boolean;
+    hexPosition: HexPosition;
+}) {
+    const springs = useSpring({
+        positionY: selected ? 1 : 0,
+        column: hexPosition.col,
+        row: hexPosition.row,
+    });
+
+    return (
+        <Piece
+            piece={pieceType}
+            column={springs.column}
+            row={springs.row}
+            team={team}
+            offset={{x: 0, y: springs.positionY, z: 0}}
+            rotation={new Euler(0, team.tag === "Blue" ? Math.PI : 0, 0)}
+        />
+    );
+}
 
 export function GameBoard({
     team,
@@ -21,7 +58,7 @@ export function GameBoard({
     selectedPiece,
     setSelectedPiece,
 }: {
-    team: TeamColor,
+    team: TeamColor;
     currentTurn: TeamColor;
     pieces: PublicPiece[];
     selectedPiece: bigint | null;
@@ -69,8 +106,17 @@ export function GameBoard({
                 setSelectedPiece(null);
             }
         },
-        [currentTurn.tag, movePiece, pieces, selectedPiece, setSelectedPiece, team.tag]
+        [
+            currentTurn.tag,
+            movePiece,
+            pieces,
+            selectedPiece,
+            setSelectedPiece,
+            team.tag,
+        ]
     );
+
+    
 
     return (
         <Board
@@ -78,29 +124,16 @@ export function GameBoard({
             rows={14}
             hexSize={1}
             texture={"board.png"}
-            onClick={(e, b) => boardOnClick(e, b)}
+            onClick={boardOnClick}
         >
             {pieces.map((piece) => {
                 return (
                     <Suspense key={piece.id}>
-                        <Piece
-                            piece={piece.pieceType}
-                            hexPosition={piece.position}
+                        <GamePiece
                             team={piece.team}
-                            offset={
-                                new Vector3(
-                                    0,
-                                    selectedPiece === piece.id ? 1 : 0,
-                                    0
-                                )
-                            }
-                            rotation={
-                                new Euler(
-                                    0,
-                                    piece.team.tag === "Blue" ? Math.PI : 0,
-                                    0
-                                )
-                            }
+                            selected={piece.id === selectedPiece}
+                            hexPosition={piece.position}
+                            pieceType={piece.pieceType}
                         />
                     </Suspense>
                 );

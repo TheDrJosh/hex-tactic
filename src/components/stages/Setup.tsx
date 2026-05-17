@@ -5,7 +5,7 @@ import { useReducer, useTable } from "spacetimedb/react";
 import { Button } from "../ui/button";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Canvas } from "@react-three/fiber";
-import { PerspectiveCamera } from "@react-three/drei";
+import { PerspectiveCamera, Stats } from "@react-three/drei";
 import { Board } from "../models/Board";
 import { cn, positionToHex } from "@/lib/utils";
 import { Vector2 } from "three";
@@ -115,7 +115,8 @@ export function Setup() {
                                 <Suspense key={piece.id}>
                                     <Piece
                                         piece={piece.pieceType}
-                                        hexPosition={piece.position}
+                                        column={piece.position.col}
+                                        row={piece.position.row}
                                     />
                                 </Suspense>
                             );
@@ -127,6 +128,7 @@ export function Setup() {
                         intensity={1}
                         castShadow
                     />
+                    <Stats />
                 </Canvas>
                 <div className="grid grid-cols-3 items-center gap-4 not-landscape:sm:grid-cols-6 landscape:grid-cols-3 landscape:self-start">
                     {pieces.map((piece) => {
