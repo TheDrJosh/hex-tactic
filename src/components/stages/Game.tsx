@@ -7,10 +7,8 @@ import { Canvas } from "@react-three/fiber";
 import { GameBoard } from "./game/GameBoard";
 import { PieceCaptured } from "./game/PieceCaptured";
 import { GameCamera } from "./game/GameCamera";
-import { Stats } from "@react-three/drei";
 
 //TODO - animate piece capture
-//TODO - fix graphics
 
 function opponentUserGameInfo(game: GameInfo) {
     if (game.team.tag === "Red") {
@@ -112,11 +110,16 @@ export function Game({ game }: { game: GameInfo }) {
 
                     <ambientLight intensity={0.5} />
                     <directionalLight
-                        position={[0, 10, 10]}
+                        position={[5, 10, 10]}
                         intensity={1}
                         castShadow
+                        shadow-camera-bottom={25}
+                        shadow-camera-left={25}
+                        shadow-camera-top={-25}
+                        shadow-camera-right={-25}
+                        shadow-mapSize-width={2048}
+                        shadow-mapSize-height={2048}
                     />
-                    <Stats />
                 </Canvas>
             </div>
             <div>

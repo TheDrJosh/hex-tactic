@@ -5,7 +5,7 @@ import { useReducer, useTable } from "spacetimedb/react";
 import { Button } from "../ui/button";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Canvas } from "@react-three/fiber";
-import { PerspectiveCamera, Stats } from "@react-three/drei";
+import { PerspectiveCamera } from "@react-three/drei";
 import { Board } from "../models/Board";
 import { cn, positionToHex } from "@/lib/utils";
 import { Vector2 } from "three";
@@ -124,11 +124,16 @@ export function Setup() {
                     </Board>
                     <ambientLight intensity={0.5} />
                     <directionalLight
-                        position={[0, 10, 10]}
+                        position={[5, 10, 10]}
                         intensity={1}
                         castShadow
+                        shadow-camera-bottom={25}
+                        shadow-camera-left={25}
+                        shadow-camera-top={-25}
+                        shadow-camera-right={-25}
+                        shadow-mapSize-width={2048}
+                        shadow-mapSize-height={2048}
                     />
-                    <Stats />
                 </Canvas>
                 <div className="grid grid-cols-3 items-center gap-4 not-landscape:sm:grid-cols-6 landscape:grid-cols-3 landscape:self-start">
                     {pieces.map((piece) => {
