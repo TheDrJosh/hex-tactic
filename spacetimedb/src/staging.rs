@@ -41,7 +41,6 @@ pub fn staging_set_piece(
         .find(|piece| piece.position == pos);
 
     if let Some(piece_type) = piece_type {
-        
         if let Some(at_pos) = at_pos {
             ctx.db.staging_piece().id().delete(at_pos.id);
         }
