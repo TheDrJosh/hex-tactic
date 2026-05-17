@@ -19,7 +19,7 @@ impl TeamColor {
 
 /// Doubled coordinates
 /// https://www.redblobgames.com/grids/hexagons/
-#[derive(SpacetimeType, PartialEq)]
+#[derive(SpacetimeType, PartialEq, Debug)]
 pub struct HexPosition {
     pub col: i32,
     pub row: i32,

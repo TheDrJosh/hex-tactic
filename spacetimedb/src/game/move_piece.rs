@@ -44,7 +44,6 @@ pub enum PieceWinner {
     Draw,
 }
 
-//TODO - Fix jump over lakes
 //TODO - Double check all positible moves
 
 #[spacetimedb::reducer]
@@ -92,7 +91,7 @@ fn move_piece(ctx: &ReducerContext, id: u64, position: HexPosition) -> Result<()
 
     // water
     if (6..=8).contains(&position.row)
-        && ((3..=5).contains(&position.col) || (9..=11).contains(&position.row))
+        && ((3..=5).contains(&position.col) || (9..=11).contains(&position.col))
     {
         return Err(MovePieceError::InvalidMove);
     }
@@ -155,6 +154,15 @@ fn move_piece(ctx: &ReducerContext, id: u64, position: HexPosition) -> Result<()
             } else {
                 return Err(MovePieceError::InvalidMove);
             };
+
+            let jumps_lake = jumped_positions.iter().find(|pos| {
+                (6..=8).contains(&pos.row)
+                    && ((3..=5).contains(&pos.col) || (9..=11).contains(&pos.col))
+            });
+
+            if jumps_lake.is_some() {
+                return Err(MovePieceError::InvalidMove);
+            }
 
             let jumps_piece = ctx
                 .db
