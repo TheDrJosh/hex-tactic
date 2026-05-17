@@ -30,7 +30,6 @@ export function Board({
     const width = (2 + (3 / 2) * columns) * hexSize;
     const height = Math.sqrt(3) * (1 + rows / 2) * hexSize;
 
-
     const boardInfo: BoardInfo = {
         rows: rows,
         columns: columns,

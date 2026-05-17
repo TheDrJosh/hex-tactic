@@ -18,9 +18,7 @@ import {
 } from "react";
 import { toast } from "sonner";
 import { useReducer } from "spacetimedb/react";
-import { Euler, Vector2 } from 'three';
-
-// const AnimatedPiece = animated(Piece);
+import { Euler, Vector2 } from "three";
 
 function GamePiece({
     team,
@@ -45,7 +43,7 @@ function GamePiece({
             column={springs.column}
             row={springs.row}
             team={team}
-            offset={{x: 0, y: springs.positionY, z: 0}}
+            offset={{ x: 0, y: springs.positionY, z: 0 }}
             rotation={new Euler(0, team.tag === "Blue" ? Math.PI : 0, 0)}
         />
     );
@@ -115,8 +113,6 @@ export function GameBoard({
             team.tag,
         ]
     );
-
-    
 
     return (
         <Board

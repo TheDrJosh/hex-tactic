@@ -32,8 +32,6 @@ export function useCurrentUser(): [User | null, boolean] {
 }
 
 export function HexToPosition(hexPos: HexPosition, hexSize: number): Vector2 {
-    // console.assert((hexPos.col + hexPos.row) % 2 === 1, hexPos);
-
     const x = (1 + (3 / 2) * hexPos.col) * hexSize;
 
     const y = ((1 + hexPos.row) * Math.sqrt(3) * hexSize) / 2;

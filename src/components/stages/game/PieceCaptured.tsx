@@ -1,5 +1,13 @@
-import { tables, type EventContext, type REMOTE_MODULE } from "@/module_bindings";
-import type { PieceCaptureEvent, PieceType, TeamColor } from "@/module_bindings/types";
+import {
+    tables,
+    type EventContext,
+    type REMOTE_MODULE,
+} from "@/module_bindings";
+import type {
+    PieceCaptureEvent,
+    PieceType,
+    TeamColor,
+} from "@/module_bindings/types";
 import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 import type { DbConnectionImpl } from "spacetimedb";
@@ -32,7 +40,13 @@ function pieceDisplayName(pieceType: PieceType): string {
     }
 }
 
-export function PieceCaptured({team, gameId}: {team: TeamColor, gameId: bigint}) {
+export function PieceCaptured({
+    team,
+    gameId,
+}: {
+    team: TeamColor;
+    gameId: bigint;
+}) {
     const spacetime = useSpacetimeDB();
 
     const onPieceCaptureEvent = useCallback(
@@ -76,9 +90,7 @@ export function PieceCaptured({team, gameId}: {team: TeamColor, gameId: bigint})
             s = conn
                 .subscriptionBuilder()
                 .subscribe(
-                    tables.piece_capture_event.where((r) =>
-                        r.game.eq(gameId)
-                    )
+                    tables.piece_capture_event.where((r) => r.game.eq(gameId))
                 );
 
             conn.db.piece_capture_event.onInsert(onPieceCaptureEvent);
