@@ -65,7 +65,7 @@ export function Setup() {
                 </Button>
             </div>
             <div className="flex flex-col gap-4 landscape:flex-row">
-                <Canvas shadows="percentage" className="aspect-video">
+                <Canvas shadows="percentage" className="aspect-video bg-muted">
                     <PerspectiveCamera
                         position={[0, 15, 15]}
                         rotation={[-Math.PI / 4, 0, 0]}

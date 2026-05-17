@@ -44,6 +44,9 @@ pub enum PieceWinner {
     Draw,
 }
 
+//TODO - Fix jump over lakes
+//TODO - Double check all positible moves
+
 #[spacetimedb::reducer]
 fn move_piece(ctx: &ReducerContext, id: u64, position: HexPosition) -> Result<(), MovePieceError> {
     position.validate()?;
