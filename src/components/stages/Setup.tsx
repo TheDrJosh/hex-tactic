@@ -1,18 +1,15 @@
 import { reducers, tables } from "@/module_bindings";
 import { PieceType, StagingPiece } from "@/module_bindings/types";
-import { lazy, Suspense, useState } from "react";
+import { Suspense, useState } from "react";
 import { useReducer, useTable } from "spacetimedb/react";
 import { Button } from "../ui/button";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Canvas } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
-// import { Board } from "../models/Board";
-const Board = lazy(() => import("../models/Board"))
+import Board from "../models/Board";
 import { cn, positionToHex } from "@/lib/utils";
 import { Vector2 } from "three";
-// import BoardPiece from "../models/BoardPiece";
-const BoardPiece = lazy(() => import("../models/BoardPiece"))
-
+import BoardPiece from "../models/BoardPiece";
 
 const pieces = [
     PieceType.Bomb,

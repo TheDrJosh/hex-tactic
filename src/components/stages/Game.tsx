@@ -1,13 +1,12 @@
 import { reducers, tables } from "@/module_bindings";
 import { type GameInfo } from "@/module_bindings/types";
-import { lazy, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useReducer, useTable } from "spacetimedb/react";
 import { Button } from "../ui/button";
 import { Canvas } from "@react-three/fiber";
 import usePieceCaptured from "@/lib/usePieceCaptured";
-
-const GameBoard = lazy(() => import("./game/GameBoard"));
-const GameCamera = lazy(() => import("./game/GameCamera"));
+import GameCamera from "./game/GameCamera";
+import GameBoard from "./game/GameBoard";
 
 //TODO - animate piece capture
 

@@ -1,5 +1,5 @@
-const Board = lazy(() => import("@/components/models/Board"))
-const BoardPiece = lazy(() => import("@/components/models/BoardPiece"))
+import Board from "@/components/models/Board";
+import BoardPiece from "@/components/models/BoardPiece";
 import type { BoardInfo } from "@/lib/boardInfo";
 import { positionToHex } from "@/lib/utils";
 import { reducers } from "@/module_bindings";
@@ -12,7 +12,6 @@ import type {
 import { useSpring } from "@react-spring/three";
 import type { ThreeEvent } from "@react-three/fiber";
 import {
-    lazy,
     Suspense,
     useCallback,
     type Dispatch,
