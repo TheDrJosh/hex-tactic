@@ -4,14 +4,10 @@ import { lazy, useEffect, useState } from "react";
 import { useReducer, useTable } from "spacetimedb/react";
 import { Button } from "../ui/button";
 import { Canvas } from "@react-three/fiber";
-
-// import GameBoard from "./game/GameBoard";
-// import GameCamera from "./game/GameCamera";
-// import PieceCaptured from "./game/PieceCaptured";
+import usePieceCaptured from "@/lib/usePieceCaptured";
 
 const GameBoard = lazy(() => import("./game/GameBoard"));
 const GameCamera = lazy(() => import("./game/GameCamera"));
-const PieceCaptured = lazy(() => import("./game/PieceCaptured"));
 
 //TODO - animate piece capture
 
@@ -49,6 +45,8 @@ export default function Game({ game }: { game: GameInfo }) {
     }, [keepAlive]);
 
     const [selectedPiece, setSelectedPiece] = useState<bigint | null>(null);
+
+    usePieceCaptured(game.game.id, game.team);
 
     if (!game.game.started) {
         return <div>Waiting for opponent</div>;
@@ -103,7 +101,6 @@ export default function Game({ game }: { game: GameInfo }) {
                         team={game.team}
                         pieceSelected={selectedPiece !== null}
                     />
-                    <PieceCaptured team={game.team} gameId={game.game.id} />
 
                     <GameBoard
                         pieces={game.pieces}
