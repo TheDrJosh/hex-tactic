@@ -5,8 +5,8 @@ import { useReducer, useTable } from "spacetimedb/react";
 import { Button } from "../ui/button";
 import { Canvas } from "@react-three/fiber";
 import { GameBoard } from "./game/GameBoard";
-import { PieceCaptured } from "./game/PieceCaptured";
 import { GameCamera } from "./game/GameCamera";
+import { PieceCaptured } from "./game/PieceCaptured";
 
 //TODO - animate piece capture
 
@@ -98,6 +98,7 @@ export function Game({ game }: { game: GameInfo }) {
                         team={game.team}
                         pieceSelected={selectedPiece !== null}
                     />
+                    <PieceCaptured team={game.team} gameId={game.game.id} />
 
                     <GameBoard
                         pieces={game.pieces}
@@ -106,7 +107,6 @@ export function Game({ game }: { game: GameInfo }) {
                         team={game.team}
                         currentTurn={game.game.currentTurn}
                     />
-                    <PieceCaptured team={game.team} gameId={game.game.id} />
 
                     <ambientLight intensity={0.5} />
                     <directionalLight

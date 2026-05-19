@@ -16,13 +16,13 @@ export default __t.row({
     get attackerTeam() {
         return TeamColor.name("attacker_team");
     },
-    piece: __t.u64(),
-    get pieceType() {
-        return PieceType.name("piece_type");
+    attackerPiece: __t.u64().name("attacker_piece"),
+    get attackerPieceType() {
+        return PieceType.name("attacker_piece_type");
     },
-    attackedPiece: __t.u64().name("attacked_piece"),
-    get attackedPieceType() {
-        return PieceType.name("attacked_piece_type");
+    defenderPiece: __t.u64().name("defender_piece"),
+    get defenderPieceType() {
+        return PieceType.name("defender_piece_type");
     },
     get winner() {
         return PieceWinner;

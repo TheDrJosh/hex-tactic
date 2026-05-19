@@ -1,5 +1,5 @@
 import { Board, type BoardInfo } from "@/components/models/Board";
-import { Piece } from "@/components/models/Piece";
+import { BoardPiece } from "@/components/models/Piece";
 import { positionToHex } from "@/lib/utils";
 import { reducers } from "@/module_bindings";
 import type {
@@ -38,7 +38,7 @@ function GamePiece({
     });
 
     return (
-        <Piece
+        <BoardPiece
             piece={pieceType}
             column={springs.column}
             row={springs.row}

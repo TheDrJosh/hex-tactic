@@ -9,7 +9,7 @@ import { PerspectiveCamera } from "@react-three/drei";
 import { Board } from "../models/Board";
 import { cn, positionToHex } from "@/lib/utils";
 import { Vector2 } from "three";
-import { Piece } from "../models/Piece";
+import { BoardPiece } from "../models/Piece";
 
 const pieces = [
     PieceType.Bomb,
@@ -113,7 +113,7 @@ export function Setup() {
                         {stagingPieces.map((piece) => {
                             return (
                                 <Suspense key={piece.id}>
-                                    <Piece
+                                    <BoardPiece
                                         piece={piece.pieceType}
                                         column={piece.position.col}
                                         row={piece.position.row}

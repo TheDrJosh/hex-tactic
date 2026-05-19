@@ -75,12 +75,12 @@ export const PieceCaptureEvent = __t.object("PieceCaptureEvent", {
     get attackerTeam() {
         return TeamColor;
     },
-    piece: __t.u64(),
-    get pieceType() {
+    attackerPiece: __t.u64(),
+    get attackerPieceType() {
         return PieceType;
     },
-    attackedPiece: __t.u64(),
-    get attackedPieceType() {
+    defenderPiece: __t.u64(),
+    get defenderPieceType() {
         return PieceType;
     },
     get winner() {

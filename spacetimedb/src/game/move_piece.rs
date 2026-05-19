@@ -28,11 +28,11 @@ pub struct PieceCaptureEvent {
 
     pub attacker_team: TeamColor,
 
-    pub piece: u64,
-    pub piece_type: PieceType,
+    pub attacker_piece: u64,
+    pub attacker_piece_type: PieceType,
 
-    pub attacked_piece: u64,
-    pub attacked_piece_type: PieceType,
+    pub defender_piece: u64,
+    pub defender_piece_type: PieceType,
 
     winner: PieceWinner,
 }
@@ -232,10 +232,10 @@ fn move_piece(ctx: &ReducerContext, id: u64, position: HexPosition) -> Result<()
         ctx.db.piece_capture_event().insert(PieceCaptureEvent {
             game: game.id,
             attacker_team: team,
-            piece: piece.id,
-            piece_type: piece.piece_type,
-            attacked_piece: attacked_piece.id,
-            attacked_piece_type: attacked_piece.piece_type,
+            attacker_piece: piece.id,
+            attacker_piece_type: piece.piece_type,
+            defender_piece: attacked_piece.id,
+            defender_piece_type: attacked_piece.piece_type,
             winner: win_type,
         });
 
