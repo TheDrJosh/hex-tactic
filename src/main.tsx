@@ -4,8 +4,6 @@ import { SpacetimeDBProvider } from "spacetimedb/react";
 import { DbConnection, type ErrorContext } from "./module_bindings";
 import type { Identity } from "spacetimedb";
 import { ThemeProvider } from "./components/theme-provider";
-import Header from "./components/Header";
-import { Toaster } from "./components/ui/sonner";
 
 const HOST = import.meta.env.VITE_SPACETIMEDB_HOST ?? "ws://localhost:3000";
 const DB_NAME = import.meta.env.VITE_SPACETIMEDB_DB_NAME ?? "react-ts";
@@ -46,14 +44,7 @@ if (!rootElement.innerHTML) {
         <StrictMode>
             <SpacetimeDBProvider connectionBuilder={connectionBuilder}>
                 <ThemeProvider>
-                    <div className="">
-                        <Header />
-                        <div className="px-6 py-2">
-                            <App />
-                        </div>
-
-                        <Toaster />
-                    </div>
+                    <App />
                 </ThemeProvider>
             </SpacetimeDBProvider>
         </StrictMode>

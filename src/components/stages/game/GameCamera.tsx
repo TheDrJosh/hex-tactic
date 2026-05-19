@@ -5,7 +5,7 @@ import type { PropsWithChildren } from "react";
 
 const AnimatedPerspectiveCamera = animated(PerspectiveCamera);
 
-export function GameCamera({
+export default function GameCamera({
     team,
     pieceSelected,
 }: PropsWithChildren<{

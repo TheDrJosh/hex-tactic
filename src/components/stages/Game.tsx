@@ -1,12 +1,17 @@
 import { reducers, tables } from "@/module_bindings";
 import { type GameInfo } from "@/module_bindings/types";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { useReducer, useTable } from "spacetimedb/react";
 import { Button } from "../ui/button";
 import { Canvas } from "@react-three/fiber";
-import { GameBoard } from "./game/GameBoard";
-import { GameCamera } from "./game/GameCamera";
-import { PieceCaptured } from "./game/PieceCaptured";
+
+// import GameBoard from "./game/GameBoard";
+// import GameCamera from "./game/GameCamera";
+// import PieceCaptured from "./game/PieceCaptured";
+
+const GameBoard = lazy(() => import("./game/GameBoard"));
+const GameCamera = lazy(() => import("./game/GameCamera"));
+const PieceCaptured = lazy(() => import("./game/PieceCaptured"));
 
 //TODO - animate piece capture
 
@@ -24,7 +29,7 @@ function opponentUserGameInfo(game: GameInfo) {
     }
 }
 
-export function Game({ game }: { game: GameInfo }) {
+export default function Game({ game }: { game: GameInfo }) {
     const keepAlive = useReducer(reducers.keepAlive);
     const quitGame = useReducer(reducers.quitGame);
 

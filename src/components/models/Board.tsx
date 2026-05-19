@@ -1,9 +1,9 @@
-/* eslint-disable react-refresh/only-export-components */
+import { BoardContext, type BoardInfo } from "@/lib/boardInfo";
 import { useLoader, type ThreeEvent } from "@react-three/fiber";
 import React from "react";
 import { TextureLoader, Vector3 } from "three";
 
-export function Board({
+export default function Board({
     position,
     columns,
     rows,
@@ -64,25 +64,3 @@ export function Board({
     );
 }
 
-export type BoardInfo = {
-    columns: number;
-    rows: number;
-    /// Inner Radius
-    hexSize: number;
-    position: Vector3;
-
-    width: number;
-    height: number;
-};
-
-const BoardContext = React.createContext<BoardInfo | undefined>(undefined);
-
-export const useBoardInfo = () => {
-    const context = React.useContext(BoardContext);
-
-    if (context === undefined) {
-        throw new Error("useBoardInfo must be used within a Board");
-    }
-
-    return context;
-};

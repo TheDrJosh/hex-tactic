@@ -40,7 +40,7 @@ function pieceDisplayName(pieceType: PieceType): string {
     }
 }
 
-export function PieceCaptured({
+export default function PieceCaptured({
     team,
     gameId,
 }: {

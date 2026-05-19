@@ -1,15 +1,18 @@
 import { reducers, tables } from "@/module_bindings";
 import { PieceType, StagingPiece } from "@/module_bindings/types";
-import { Suspense, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useReducer, useTable } from "spacetimedb/react";
 import { Button } from "../ui/button";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Canvas } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
-import { Board } from "../models/Board";
+// import { Board } from "../models/Board";
+const Board = lazy(() => import("../models/Board"))
 import { cn, positionToHex } from "@/lib/utils";
 import { Vector2 } from "three";
-import { BoardPiece } from "../models/Piece";
+// import BoardPiece from "../models/BoardPiece";
+const BoardPiece = lazy(() => import("../models/BoardPiece"))
+
 
 const pieces = [
     PieceType.Bomb,
@@ -26,7 +29,7 @@ const pieces = [
     PieceType.Marshal,
 ];
 
-export function Setup() {
+export default function Setup() {
     const [selectedPiece, setSelectedPiece] = useState<PieceType | undefined>(
         undefined
     );
